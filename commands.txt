@@ -1,0 +1,41 @@
+1) ECHO:
+
+Invoke-RestMethod -Uri http://127.0.0.1:5000/echo -Method POST -ContentType "application/json" -Body '{"message":"hello"}'
+
+2) TIME:
+
+Invoke-RestMethod -Uri http://127.0.0.1:5000/time -Method GET
+
+3) ERRORS:
+
+1. BAD REQUEST
+curl.exe -i -X POST http://127.0.0.1:5000/echo -H "Content-Type: application/json" -d "{}"
+
+2. NOT FOUND
+curl.exe -i http://127.0.0.1:5000/abc
+
+4) TASK:
+
+1. CREATE
+$job = Invoke-RestMethod -Uri http://127.0.0.1:5000/jobs -Method POST -ContentType "application/json" -Body '{"message":"hello from lab 2"}'
+
+2. CHECK ID
+$job
+
+3. SAVE ID
+$jobId = $job.job_id
+
+4. CHECK QUEUE
+Get-ChildItem queue
+
+5. CHECK STATUS
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/jobs/$jobId"
+
+6. after worker.py, CHECK RESULT:
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/jobs/$jobId"
+
+7. CHECK QUEUE
+Get-ChildItem queue
+
+8. CHECK result
+Get-ChildItem queue
